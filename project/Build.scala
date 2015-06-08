@@ -86,7 +86,7 @@ object ShapelessBuild extends Build {
   def commonSettings = Defaults.defaultSettings ++
     Seq(
       organization        := "com.chuusai",
-      version             := "1.2.4",
+      version             := "1.2.5-1.2.4-patch",
       scalaVersion        := "2.10.2",
 
       (unmanagedSourceDirectories in Compile) <<= (scalaSource in Compile)(Seq(_)),
@@ -96,6 +96,8 @@ object ShapelessBuild extends Build {
       crossScalaVersions  <<= isSnapshot { s => Seq("2.10.0") ++ (if (s) Seq("2.10.1-SNAPSHOT", "2.11.0-SNAPSHOT") else Seq()) },
 
       scalacOptions       := Seq(
+        // Use short file names so sbt-assembly can unpack class files inside Docker.
+        "-Xmax-classfile-name", "100",
         "-feature",
         "-language:higherKinds",
         "-language:implicitConversions",
