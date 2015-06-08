@@ -136,6 +136,8 @@ object ShapelessBuild extends Build {
       (unmanagedSourceDirectories in Test) <<= (scalaSource in Test)(Seq(_)),
 
       scalacOptions       := Seq(
+        // Use short file names so sbt-assembly can unpack class files inside Docker.
+        "-Xmax-classfile-name", "100",
         "-feature",
         "-language:higherKinds",
         "-language:implicitConversions",
